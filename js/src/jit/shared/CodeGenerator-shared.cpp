@@ -141,10 +141,6 @@ bool CodeGeneratorShared::generatePrologue() {
 bool CodeGeneratorShared::generateEpilogue() {
   MOZ_ASSERT(!gen->compilingWasm());
 
-  puts("searchme: I am added in generateEpilogue from puts begin");
-  masm.printf("searchme: I am added in generateEpilogue from masm");
-  puts("searchme: I am added in generateEpilogue from puts end");
-
   masm.bind(&returnLabel_);
 
   if (JS::TraceLoggerSupported()) {
