@@ -8,6 +8,7 @@
 #define jit_x86_shared_Assembler_x86_shared_h
 
 #include <cstddef>
+#include <stdio.h>
 
 #include "jit/shared/Assembler-shared.h"
 
@@ -1086,14 +1087,17 @@ class AssemblerX86Shared : public AssemblerShared {
 
   void ret() {
     MOZ_ASSERT(hasCreator());
+    printf("searchme: Returning by ret\n");
     masm.ret();
   }
   void retn(Imm32 n) {
     MOZ_ASSERT(hasCreator());
     // Remove the size of the return address which is included in the frame.
+    printf("searchme: Returning by retn %d\n", n.value);
     masm.ret_i(n.value - sizeof(void*));
   }
   CodeOffset call(Label* label) {
+    printf("searchme: Calling label with offset %d\n", label->offset());
     JmpSrc j = masm.call();
     if (label->bound()) {
       masm.linkJump(j, JmpDst(label->offset()));
@@ -1108,6 +1112,7 @@ class AssemblerX86Shared : public AssemblerShared {
     return CodeOffset(masm.currentOffset());
   }
   CodeOffset call(Register reg) {
+    printf("searchme: Calling regiester %d\n", reg.encoding());
     masm.call_r(reg.encoding());
     return CodeOffset(masm.currentOffset());
   }
