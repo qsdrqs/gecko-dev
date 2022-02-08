@@ -10,7 +10,7 @@ JS_FLAG = $(THRESHOLDS) --ion-offthread-compile=off --ion-eager
 export IONFLAGS=warp-transpiler,scripts#,dump-mir-expr
 
 build:
-	cd .. && ./mach build && cp $(JS) .
+	cd .. && ./mach build && cp $(JS) $(CURDIR)/
 
 %.run: %.js
 	$(JS) $(JS_FLAG) $<
