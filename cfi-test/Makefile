@@ -13,5 +13,12 @@ export IONFLAGS=warp-transpiler,scripts#,dump-mir-expr
 build:
 	cd .. && ./mach build && cp $(JS) $(CURDIR)/
 
+build_4:
+	cd .. && env MOZCONFIG=$(CURDIR)/mozconfig_4threads ./mach build && cp $(JS) $(CURDIR)/
+
+
+clangd:
+	cd .. && ./mach build-backend --backend=CompileDB && ln -s $(MOZ_OBJDIR)/compile_commands.json compile_commands.json
+
 %.run: %.js
 	$(JS) $(JS_FLAG) $<

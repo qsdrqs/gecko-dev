@@ -1,5 +1,8 @@
 mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/cfi-test/obj-cfi
 
+# only use 4 threads to build due to parallel issues
+mk_add_options MOZ_PARALLEL_BUILD=4
+
 # Build only the JS shell
 ac_add_options --enable-application=js
 
