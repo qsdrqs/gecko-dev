@@ -9,9 +9,9 @@ dap.configurations.cpp = {
       name = "Launch file",
       type = "cppdbg",
       request = "launch",
-      program = "${workspaceFolder}/obj-x86_64-pc-linux-gnu/js/src/js",
+      program = "cfi-test/js",
       cwd = '${workspaceFolder}',
-      args = {'obj-x86_64-pc-linux-gnu/js/src/test.js'},
+      args = {'cfi-test/t.js'},
       stopOnEntry = true,
       setupCommands = {
         {
