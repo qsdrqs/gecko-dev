@@ -2,6 +2,7 @@ mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/cfi-test/obj-cfi
 
 # Build only the JS shell
 ac_add_options --enable-application=js
+ac_add_options --enable-js-shell
 
 # Enable printing in masm
 # ac_add_options --enable-masm-verbose
@@ -17,4 +18,4 @@ ac_add_options --enable-debug
 
 # Enable optimizations as well so that the test suite runs much faster. If
 # you are having trouble using a debugger, you should disable optimization.
-ac_add_options --enable-optimize
+ac_add_options --disable-optimize

@@ -1117,6 +1117,7 @@ class AssemblerX86Shared : public AssemblerShared {
   }
   CodeOffset call(Register reg) {
     // printf("searchme: Calling regiester %d\n", reg.encoding());
+    masm.call_r(reg.encoding());
     return CodeOffset(masm.currentOffset());
   }
   void call(const Operand& op) {

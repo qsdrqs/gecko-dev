@@ -2611,8 +2611,8 @@ class BaseAssembler : public GenericAssembler {
   }
 
   void call_m(int32_t offset, RegisterID base) {
-    printf("call       " MEM_ob,  ADDR_ob(offset, base));
-    printf("\n");
+    //printf("call       " MEM_ob,  ADDR_ob(offset, base));
+    //printf("\n");
     spew("call       *" MEM_ob, ADDR_ob(offset, base));
     m_formatter.oneByteOp(OP_GROUP5_Ev, offset, base, GROUP5_OP_CALLN);
   }

@@ -6,12 +6,12 @@ JS = $(JS_DIR)/js
 # no-baseline ?
 THRESHOLDS = --ion-warmup-threshold=6 --baseline-warmup-threshold=4 --blinterp-warmup-threshold=2
 OPTIMIZATIONS = --ion-inlining=off 
-JS_FLAG = $(THRESHOLDS) $(OPTIMIZATIONS) --ion-offthread-compile=off --ion-eager
+JS_FLAG = $(THRESHOLDS) $(OPTIMIZATIONS) --ion-offthread-compile=off
 
 export IONFLAGS=warp-transpiler,scripts#,dump-mir-expr
 
 build:
-	cd .. && ./mach build && cp $(JS) $(CURDIR)/
+	cd .. &&  ./mach build && cp $(JS) $(CURDIR)/
 
 build_4:
 	cd .. && env MOZCONFIG=$(CURDIR)/mozconfig_4threads ./mach build && cp $(JS) $(CURDIR)/
