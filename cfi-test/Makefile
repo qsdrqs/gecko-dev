@@ -8,7 +8,7 @@ THRESHOLDS = --ion-warmup-threshold=6 --baseline-warmup-threshold=4 --blinterp-w
 OPTIMIZATIONS = --ion-inlining=off 
 JS_FLAG = $(THRESHOLDS) $(OPTIMIZATIONS) --ion-offthread-compile=off
 
-export IONFLAGS=warp-transpiler,scripts#,dump-mir-expr
+export IONFLAGS=bl-osr#warp-transpiler,scripts#,dump-mir-expr
 
 build:
 	cd .. &&  ./mach build && cp $(JS) $(CURDIR)/
@@ -18,7 +18,7 @@ build_4:
 
 
 clangd:
-	cd .. && ./mach build-backend --backend=CompileDB && ln -s $(MOZ_OBJDIR)/compile_commands.json compile_commands.json
+	cd .. && ./mach build-backend --backend=CompileDB && rm compile_commands.json && ln -s $(MOZ_OBJDIR)/compile_commands.json compile_commands.json
 
 %.run: %.js
 	$(JS) $(JS_FLAG) $<

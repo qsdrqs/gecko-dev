@@ -1484,6 +1484,7 @@ bool BaselineCompilerCodeGen::emitWarmUpCounterIncrement() {
     // Jump into Ion.
     masm.loadPtr(Address(osrDataReg, IonOsrTempData::offsetOfBaselineFrame()),
                  OsrFrameReg);
+    printf("searchme: jumping into Ion at (reg: %s, offset: %zu)\n", osrDataReg.name(), IonOsrTempData::offsetOfJitCode());
     masm.jump(Address(osrDataReg, IonOsrTempData::offsetOfJitCode()));
   } else {
     prepareVMCall();
