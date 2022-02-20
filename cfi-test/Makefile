@@ -8,7 +8,7 @@ THRESHOLDS = --ion-warmup-threshold=6 --baseline-warmup-threshold=4 --blinterp-w
 OPTIMIZATIONS = --ion-inlining=off 
 JS_FLAG = $(THRESHOLDS) $(OPTIMIZATIONS) --ion-offthread-compile=off
 
-export IONFLAGS=bl-osr#warp-transpiler,scripts#,dump-mir-expr
+export IONFLAGS=bl-all#,codegen#warp-transpiler,scripts#,dump-mir-expr
 
 build:
 	cd .. &&  ./mach build && cp $(JS) $(CURDIR)/

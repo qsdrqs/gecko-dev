@@ -686,6 +686,9 @@ enum class VMFunctionId;
 extern const VMFunctionData& GetVMFunction(VMFunctionId id);
 extern const VMFunctionData& GetVMFunction(TailCallVMFunctionId id);
 
+void CheckCFI(uintptr_t ptr);
+void AddCFIValidPtr(uintptr_t ptr);
+
 }  // namespace jit
 }  // namespace js
 

@@ -101,6 +101,7 @@ namespace jit {
   _(js::irregexp::CaseInsensitiveCompareNonUnicode)                   \
   _(js::irregexp::CaseInsensitiveCompareUnicode)                      \
   _(js::irregexp::GrowBacktrackStack)                                 \
+  _(js::jit::AddCFIValidPtr)                                      \
   _(js::jit::AllocateAndInitTypedArrayBuffer)                         \
   _(js::jit::AllocateBigIntNoGC)                                      \
   _(js::jit::AllocateFatInlineString)                                 \
@@ -122,6 +123,7 @@ namespace jit {
   _(js::jit::NumberBigIntCompare<ComparisonKind::LessThan>)           \
   _(js::jit::NumberBigIntCompare<ComparisonKind::GreaterThanOrEqual>) \
   _(js::jit::BigIntNumberCompare<ComparisonKind::GreaterThanOrEqual>) \
+  _(js::jit::CheckCFI)                                                \
   _(js::jit::CreateMatchResultFallbackFunc)                           \
   _(js::jit::EqualStringsHelperPure)                                  \
   _(js::jit::FinishBailoutToBaseline)                                 \

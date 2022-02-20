@@ -1430,6 +1430,7 @@ bool BaselineCompilerCodeGen::emitWarmUpCounterIncrement() {
     static_assert(ReturnReg != OsrFrameReg,
                   "Code below depends on osrDataReg != OsrFrameReg");
     Register osrDataReg = ReturnReg;
+    masm.add_cfi(osrDataReg);
     masm.branchTestPtr(Assembler::Zero, osrDataReg, osrDataReg, &done);
 
     // Success! Switch from Baseline JIT code to Ion JIT code.

@@ -5194,6 +5194,9 @@ class MacroAssembler : public MacroAssemblerSpecific {
   void printf(const char* output);
   void printf(const char* output, Register value);
 
+  void check_cfi(Register fptr);
+  void add_cfi(Register fptr);
+
 #ifdef JS_TRACE_LOGGING
   void loadTraceLogger(Register logger);
   void tracelogStartId(Register logger, uint32_t textId, bool force = false);

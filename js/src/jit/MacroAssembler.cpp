@@ -2230,6 +2230,44 @@ void MacroAssembler::printf(const char* output, Register value) {
 #endif
 }
 
+void MacroAssembler::check_cfi(Register fptr) {
+  fprintf(stderr, "searchme: calling check_cfi with %s\n", fptr.name());
+  AllocatableRegisterSet regs(RegisterSet::Volatile());
+  LiveRegisterSet save(regs.asLiveSet());
+  PushRegsInMask(save);
+
+  regs.takeUnchecked(fptr);
+
+  Register temp = regs.takeAnyGeneral();
+
+  using Fn = void (*)(uintptr_t fptr);
+  setupUnalignedABICall(temp);
+  movePtr(fptr, temp);
+  passABIArg(temp);
+  callWithABI<Fn, CheckCFI>();
+
+  PopRegsInMask(save);
+}
+
+void MacroAssembler::add_cfi(Register fptr) {
+  fprintf(stderr, "searchme: calling add_cfi with %s\n", fptr.name());
+  AllocatableRegisterSet regs(RegisterSet::Volatile());
+  LiveRegisterSet save(regs.asLiveSet());
+  PushRegsInMask(save);
+
+  regs.takeUnchecked(fptr);
+
+  Register temp = regs.takeAnyGeneral();
+
+  using Fn = void (*)(uintptr_t fptr);
+  setupUnalignedABICall(temp);
+  movePtr(fptr, temp);
+  passABIArg(temp);
+  callWithABI<Fn, AddCFIValidPtr>();
+
+  PopRegsInMask(save);
+}
+
 #ifdef JS_TRACE_LOGGING
 void MacroAssembler::loadTraceLogger(Register logger) {
   loadJSContext(logger);

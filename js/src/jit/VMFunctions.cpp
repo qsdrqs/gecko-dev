@@ -2634,6 +2634,7 @@ void Printf0(const char* output) {
   // Use stderr instead of stdout because this is only used for debug
   // output. stderr is less likely to interfere with the program's normal
   // output, and it's always unbuffered.
+  fprintf(stderr, "searchme: In some C functions\n");
   fprintf(stderr, "%s", output);
 }
 
@@ -2645,6 +2646,16 @@ void Printf1(const char* output, uintptr_t value) {
     oomUnsafe.crash("OOM at masm.printf");
   }
   fprintf(stderr, "%s", line.get());
+}
+
+void CheckCFI(uintptr_t ptr) {
+  AutoUnsafeCallWithABI unsafe;
+  fprintf(stderr, "searchme: CheckCFI checking %lu\n", ptr);
+}
+
+void AddCFIValidPtr(uintptr_t ptr) {
+  AutoUnsafeCallWithABI unsafe;
+  fprintf(stderr, "searchme: AddCFIValidPtr adding %lu\n", ptr);
 }
 
 }  // namespace jit
