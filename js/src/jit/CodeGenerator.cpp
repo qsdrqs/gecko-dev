@@ -5475,7 +5475,11 @@ void CodeGenerator::visitCallKnown(LCallKnown* call) {
   Register calleereg = ToRegister(call->getFunction());
   Register objreg = ToRegister(call->getTempObject());
   masm.printf("searchme: in visitCallKnown\n");
-  masm.check_cfi(calleereg);
+  uint32_t tempVirtualReg = call->getTempObject()->virtualRegister();
+  uint32_t* virtualRegister = new uint32_t[1];
+  virtualRegister[0] = tempVirtualReg;
+  masm.check_cfi(virtualRegister);
+  //masm.check_cfi(maybeTemp);
 
   uint32_t unusedStack = StackOffsetOfPassedArg(call->argslot());
   WrappedFunction* target = call->getSingleTarget();

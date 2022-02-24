@@ -4,6 +4,7 @@
         // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
         "version": "0.2.0",
         "configurations": [
+
                 {
                         "name": "(gdb) Launch",
                         "type": "cppdbg",
@@ -15,11 +16,11 @@
                                 "--blinterp-warmup-threshold=2",
                                 "--ion-inlining=off",
                                 "--ion-offthread-compile=off",
-                                "cfi-test/t.js",
+                                "cfi-test/t.js"
                         ],
                         "stopAtEntry": false,
                         "cwd": "${workspaceFolder}",
-                        "environment": [],
+                        "environment": [{"name": "IONFLAGS", "value": "bl-all"}],
                         "externalConsole": false,
                         "MIMode": "gdb",
                         "setupCommands": [

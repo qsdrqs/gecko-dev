@@ -572,8 +572,11 @@ void LIRGenerator::visitCall(MCall* call) {
       lir = new (alloc()) LCallNative(tempFixed(cxReg), tempFixed(numReg),
                                       tempFixed(vpReg), tempFixed(tmpReg));
     } else {
+      LDefinition tempReg = tempFixed(CallTempReg0);
+      uint32_t tempVirtualReg = tempReg.virtualRegister();
+      printf("searchme: virtual register of adding: %d\n", tempVirtualReg);
       lir = new (alloc()) LCallKnown(useRegisterAtStart(call->getCallee()),
-                                     tempFixed(CallTempReg0));
+                                     tempReg);
     }
   } else {
     // Call anything, using the most generic code.

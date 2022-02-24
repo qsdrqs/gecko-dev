@@ -2230,19 +2230,17 @@ void MacroAssembler::printf(const char* output, Register value) {
 #endif
 }
 
-void MacroAssembler::check_cfi(Register fptr) {
-  fprintf(stderr, "searchme: calling check_cfi with %s\n", fptr.name());
+void MacroAssembler::check_cfi(uint32_t* fVirReg) {
+  fprintf(stderr, "searchme: calling check_cfi with %d\n", *fVirReg);
   AllocatableRegisterSet regs(RegisterSet::Volatile());
   LiveRegisterSet save(regs.asLiveSet());
   PushRegsInMask(save);
 
-  regs.takeUnchecked(fptr);
-
   Register temp = regs.takeAnyGeneral();
 
-  using Fn = void (*)(uintptr_t fptr);
+  using Fn = void (*)(uint32_t* fVirReg);
   setupUnalignedABICall(temp);
-  movePtr(fptr, temp);
+  movePtr(ImmPtr(fVirReg), temp);
   passABIArg(temp);
   callWithABI<Fn, CheckCFI>();
 

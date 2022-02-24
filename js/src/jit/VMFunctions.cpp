@@ -2648,9 +2648,9 @@ void Printf1(const char* output, uintptr_t value) {
   fprintf(stderr, "%s", line.get());
 }
 
-void CheckCFI(uintptr_t ptr) {
+void CheckCFI(uint32_t* ptr) {
   AutoUnsafeCallWithABI unsafe;
-  fprintf(stderr, "searchme: CheckCFI checking %lu\n", ptr);
+  fprintf(stderr, "searchme: CheckCFI checking %d\n", *ptr);
 }
 
 void AddCFIValidPtr(uintptr_t ptr) {
