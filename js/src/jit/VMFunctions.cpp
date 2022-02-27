@@ -2658,6 +2658,21 @@ void CheckCFI_Reg(uintptr_t ptr) {
   fprintf(stderr, "searchme: CheckCFI checking %p\n", (void *)ptr);
 }
 
+void CheckCFI_Abi(uintptr_t checklist, uintptr_t objreg) {
+  JitRuntime::CFICheckList* cfiCheckList = (JitRuntime::CFICheckList*)checklist;
+  uint8_t* objReg = (uint8_t*)objreg;
+  AutoUnsafeCallWithABI unsafe;
+
+  for (size_t i = 0; i < cfiCheckList->size; i++) {
+    if (cfiCheckList->cfi_list[i].enter == objReg) {
+      fprintf(stderr, "searchme: CheckCFI success when checking %p\n", objReg);
+      return;
+    }
+  }
+
+  fprintf(stderr, "searchme: CheckCFI failure when checking %p\n", objReg);
+}
+
 void AddCFIValidPtr(uintptr_t ptr) {
   AutoUnsafeCallWithABI unsafe;
   fprintf(stderr, "searchme: AddCFIValidPtr adding %p\n", (void *)ptr);

@@ -688,6 +688,7 @@ extern const VMFunctionData& GetVMFunction(TailCallVMFunctionId id);
 
 void CheckCFI(uint32_t ptr);
 void CheckCFI_Reg(uintptr_t ptr);
+void CheckCFI_Abi(uintptr_t fptr, uintptr_t objreg);
 void AddCFIValidPtr(uintptr_t ptr);
 
 }  // namespace jit

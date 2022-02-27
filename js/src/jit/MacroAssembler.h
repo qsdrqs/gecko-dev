@@ -35,6 +35,7 @@
 #include "jit/AtomicOp.h"
 #include "jit/AutoJitContextAlloc.h"
 #include "jit/IonTypes.h"
+#include "jit/JitRuntime.h"
 #include "jit/MoveResolver.h"
 #include "jit/VMFunctions.h"
 #include "js/ScalarType.h"  // js::Scalar::Type
@@ -5196,6 +5197,7 @@ class MacroAssembler : public MacroAssemblerSpecific {
 
   void check_cfi(uint32_t fptr);
   void check_cfi_reg(Register fptr);
+  void check_cfi_abi(JitRuntime::CFICheckList* fptr, Register objreg);
   void add_cfi(Register fptr);
 
 #ifdef JS_TRACE_LOGGING

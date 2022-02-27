@@ -284,7 +284,34 @@ class JitRuntime {
   }
 
  public:
-  JitRuntime() = default;
+  struct FunctionPointersCFI {
+    uint8_t* enter;
+    uint8_t* exit;
+  };
+  struct CFICheckList {
+    FunctionPointersCFI* cfi_list;
+    size_t size;
+    size_t capacity;
+  };
+  CFICheckList cfiCheckList;
+  JitRuntime() {
+    cfiCheckList.capacity = 100;
+    cfiCheckList.size = 0;
+    cfiCheckList.cfi_list = new FunctionPointersCFI[cfiCheckList.size];
+  }
+
+  bool addCFI(uint8_t* enter, uint8_t* exit) {
+    if (cfiCheckList.size + 1 > 100) {
+      return false;
+    }
+    cfiCheckList.size++;
+    size_t size = cfiCheckList.size;
+
+    cfiCheckList.cfi_list[size - 1].enter = enter;
+    cfiCheckList.cfi_list[size - 1].exit = exit;
+    return true;
+  }
+
   ~JitRuntime();
   [[nodiscard]] bool initialize(JSContext* cx);
 

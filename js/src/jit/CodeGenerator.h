@@ -1,4 +1,5 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*-
+      jitruntime_(cx->runtime()->jitRuntime()),
  * vim: set ts=8 sts=2 et sw=2 tw=80:
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -96,6 +97,8 @@ class CodeGenerator final : public CodeGeneratorSpecific {
                                   const StoreOutputTo& out);
 
  public:
+  CodeGenerator(MIRGenerator* gen, LIRGraph* graph, JSContext* cx,
+                MacroAssembler* masm = nullptr);
   CodeGenerator(MIRGenerator* gen, LIRGraph* graph,
                 MacroAssembler* masm = nullptr);
   ~CodeGenerator();
@@ -109,6 +112,8 @@ class CodeGenerator final : public CodeGeneratorSpecific {
 
   [[nodiscard]] bool link(JSContext* cx, const WarpSnapshot* snapshot);
 
+  bool addCFI(uint8_t* enter, uint8_t* exit);
+  JitRuntime::CFICheckList* getCFICheckList() const { return &jitruntime_->cfiCheckList; }
   void emitOOLTestObject(Register objreg, Label* ifTruthy, Label* ifFalsy,
                          Register scratch);
   void emitIntToString(Register input, Register output, Label* ool);
@@ -341,6 +346,8 @@ class CodeGenerator final : public CodeGeneratorSpecific {
                               Register tmp);
 
   Vector<CodeOffset, 0, JitAllocPolicy> ionScriptLabels_;
+
+  JitRuntime* jitruntime_;
 
   // Used to bake in a pointer into the IonScript's list of nursery objects, for
   // MNurseryObject codegen.

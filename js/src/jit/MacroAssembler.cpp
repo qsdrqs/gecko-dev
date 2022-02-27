@@ -2265,6 +2265,25 @@ void MacroAssembler::check_cfi_reg(Register fptr) {
   PopRegsInMask(save);
 }
 
+void MacroAssembler::check_cfi_abi(JitRuntime::CFICheckList* fptr, Register objreg) {
+  AllocatableRegisterSet regs(RegisterSet::Volatile());
+  LiveRegisterSet save(regs.asLiveSet());
+  PushRegsInMask(save);
+
+  regs.takeUnchecked(objreg);
+
+  Register temp = regs.takeAnyGeneral();
+
+  using Fn = void (*)(uintptr_t fptr, uintptr_t objreg);
+  setupUnalignedABICall(temp);
+  movePtr(ImmPtr(fptr), temp);
+  passABIArg(temp);
+  passABIArg(objreg);
+  callWithABI<Fn, CheckCFI_Abi>();
+
+  PopRegsInMask(save);
+}
+
 void MacroAssembler::add_cfi(Register fptr) {
   fprintf(stderr, "searchme: calling add_cfi with %s\n", fptr.name());
   AllocatableRegisterSet regs(RegisterSet::Volatile());

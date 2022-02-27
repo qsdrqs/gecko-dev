@@ -72,6 +72,8 @@ class WarpSnapshot;
 [[nodiscard]] bool OptimizeMIR(MIRGenerator* mir);
 LIRGraph* GenerateLIR(MIRGenerator* mir);
 CodeGenerator* GenerateCode(MIRGenerator* mir, LIRGraph* lir);
+CodeGenerator* GenerateCode(MIRGenerator* mir, LIRGraph* lir, JSContext* cx);
+CodeGenerator* CompileBackEnd(MIRGenerator* mir, WarpSnapshot* snapshot, JSContext* cx);
 CodeGenerator* CompileBackEnd(MIRGenerator* mir, WarpSnapshot* snapshot);
 
 void LinkIonScript(JSContext* cx, HandleScript calleescript);

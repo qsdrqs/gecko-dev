@@ -949,6 +949,15 @@ CodeGenerator::CodeGenerator(MIRGenerator* gen, LIRGraph* graph,
       scriptCounts_(nullptr),
       realmStubsToReadBarrier_(0) {}
 
+CodeGenerator::CodeGenerator(MIRGenerator* gen, LIRGraph* graph, JSContext* cx,
+                             MacroAssembler* masm)
+    : CodeGeneratorSpecific(gen, graph, masm),
+      ionScriptLabels_(gen->alloc()),
+      jitruntime_(cx->runtime()->jitRuntime()),
+      ionNurseryObjectLabels_(gen->alloc()),
+      scriptCounts_(nullptr),
+      realmStubsToReadBarrier_(0) {}
+
 CodeGenerator::~CodeGenerator() { js_delete(scriptCounts_); }
 
 class OutOfLineZeroIfNaN : public OutOfLineCodeBase<CodeGenerator> {
@@ -1312,6 +1321,10 @@ void CodeGenerator::emitOOLTestObject(Register objreg,
 
   masm.branchIfTrueBool(scratch, ifEmulatesUndefined);
   masm.jump(ifDoesntEmulateUndefined);
+}
+
+bool CodeGenerator::addCFI(uint8_t* enter, uint8_t* exit) {
+  return jitruntime_->addCFI(enter, exit);
 }
 
 // Base out-of-line code generator for all tests of the truthiness of an
@@ -5524,6 +5537,7 @@ void CodeGenerator::visitCallKnown(LCallKnown* call) {
   // Finally call the function in objreg.
   masm.check_cfi_reg(calleereg);
   masm.check_cfi_reg(objreg);
+  masm.check_cfi_abi(getCFICheckList(), objreg);
   uint32_t callOffset = masm.callJit(objreg);
   markSafepointAt(callOffset, call);
 
@@ -12169,6 +12183,7 @@ bool CodeGenerator::link(JSContext* cx, const WarpSnapshot* snapshot) {
     JitcodeGlobalEntry::DummyEntry entry;
     printf("searchme: raw start: %p\n", code->raw());
     printf("searchme: raw end: %p\n", code->rawEnd());
+    addCFI(code->raw(), code->rawEnd());
     entry.init(code, code->raw(), code->rawEnd());
 
     // Add entry to the global table.
