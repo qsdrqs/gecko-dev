@@ -5476,9 +5476,9 @@ void CodeGenerator::visitCallKnown(LCallKnown* call) {
   Register objreg = ToRegister(call->getTempObject());
   masm.printf("searchme: in visitCallKnown\n");
   uint32_t tempVirtualReg = call->getTempObject()->virtualRegister();
-  uint32_t* virtualRegister = new uint32_t[1];
-  virtualRegister[0] = tempVirtualReg;
-  masm.check_cfi(virtualRegister);
+  masm.check_cfi(tempVirtualReg);
+  masm.check_cfi_reg(calleereg);
+  masm.check_cfi_reg(objreg);
   //masm.check_cfi(maybeTemp);
 
   uint32_t unusedStack = StackOffsetOfPassedArg(call->argslot());

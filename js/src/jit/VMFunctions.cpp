@@ -2648,14 +2648,19 @@ void Printf1(const char* output, uintptr_t value) {
   fprintf(stderr, "%s", line.get());
 }
 
-void CheckCFI(uint32_t* ptr) {
+void CheckCFI(uint32_t ptr) {
   AutoUnsafeCallWithABI unsafe;
-  fprintf(stderr, "searchme: CheckCFI checking %d\n", *ptr);
+  fprintf(stderr, "searchme: CheckCFI checking %d\n", ptr);
+}
+
+void CheckCFI_Reg(uintptr_t ptr) {
+  AutoUnsafeCallWithABI unsafe;
+  fprintf(stderr, "searchme: CheckCFI checking %p\n", (void *)ptr);
 }
 
 void AddCFIValidPtr(uintptr_t ptr) {
   AutoUnsafeCallWithABI unsafe;
-  fprintf(stderr, "searchme: AddCFIValidPtr adding %lu\n", ptr);
+  fprintf(stderr, "searchme: AddCFIValidPtr adding %p\n", (void *)ptr);
 }
 
 }  // namespace jit

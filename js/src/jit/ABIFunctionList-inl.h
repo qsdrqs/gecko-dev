@@ -124,6 +124,7 @@ namespace jit {
   _(js::jit::NumberBigIntCompare<ComparisonKind::GreaterThanOrEqual>) \
   _(js::jit::BigIntNumberCompare<ComparisonKind::GreaterThanOrEqual>) \
   _(js::jit::CheckCFI)                                                \
+  _(js::jit::CheckCFI_Reg)                                            \
   _(js::jit::CreateMatchResultFallbackFunc)                           \
   _(js::jit::EqualStringsHelperPure)                                  \
   _(js::jit::FinishBailoutToBaseline)                                 \
