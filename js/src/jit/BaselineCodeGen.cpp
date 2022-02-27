@@ -1431,9 +1431,6 @@ bool BaselineCompilerCodeGen::emitWarmUpCounterIncrement() {
                   "Code below depends on osrDataReg != OsrFrameReg");
     Register osrDataReg = ReturnReg;
 
-    masm.add_cfi(osrDataReg);
-    masm.add_cfi(OsrFrameReg);
-
     masm.branchTestPtr(Assembler::Zero, osrDataReg, osrDataReg, &done);
 
     // Success! Switch from Baseline JIT code to Ion JIT code.
@@ -1485,7 +1482,12 @@ bool BaselineCompilerCodeGen::emitWarmUpCounterIncrement() {
     }
 #endif
 
+    masm.add_cfi(osrDataReg);
+    masm.add_cfi(OsrFrameReg);
+    printf("searchme: osrDataReg's offset is: %lu\n", IonOsrTempData::offsetOfJitCode());
+
     // Jump into Ion.
+    printf("searchme: loading frame ptr (reg: %s, offset: %zu) --> (reg: %s)\n", osrDataReg.name(), IonOsrTempData::offsetOfJitCode(), OsrFrameReg.name());
     masm.loadPtr(Address(osrDataReg, IonOsrTempData::offsetOfBaselineFrame()),
                  OsrFrameReg);
     printf("searchme: jumping into Ion at (reg: %s, offset: %zu)\n", osrDataReg.name(), IonOsrTempData::offsetOfJitCode());
@@ -1549,6 +1551,7 @@ bool BaselineInterpreterCodeGen::emitWarmUpCounterIncrement() {
     // synced at OSR points) and BaselineCompileFromBaselineInterpreter has
     // already cleared the RUNNING_IN_INTERPRETER flag for us.
     // See BaselineFrame::prepareForBaselineInterpreterToJitOSR.
+    masm.add_cfi(ReturnReg);
     masm.jump(ReturnReg);
   }
 
