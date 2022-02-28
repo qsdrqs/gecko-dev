@@ -89,6 +89,7 @@ JitRuntime::~JitRuntime() {
 
   // By this point, the jitcode global table should be empty.
   MOZ_ASSERT_IF(jitcodeGlobalTable_, jitcodeGlobalTable_->empty());
+  delete[] cfiCheckList.cfi_list;
   js_delete(jitcodeGlobalTable_.ref());
 }
 
