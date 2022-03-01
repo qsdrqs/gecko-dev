@@ -284,25 +284,33 @@ class JitRuntime {
   }
 
  public:
-  struct FunctionPointersCFI {
+  struct EntryDestCFI {
     uint8_t* enter;
     uint8_t* exit;
   };
   struct CFICheckList {
-    FunctionPointersCFI* cfi_list;
+    EntryDestCFI* cfi_list;
     size_t size;
     size_t capacity;
   };
   CFICheckList cfiCheckList;
   JitRuntime() {
-    cfiCheckList.capacity = 100;
+    cfiCheckList.capacity = 1024;
     cfiCheckList.size = 0;
-    cfiCheckList.cfi_list = new FunctionPointersCFI[cfiCheckList.size];
+    cfiCheckList.cfi_list = new EntryDestCFI[cfiCheckList.capacity];
   }
 
   bool addCFI(uint8_t* enter, uint8_t* exit) {
-    if (cfiCheckList.size + 1 > 100) {
-      return false;
+    if (cfiCheckList.size == cfiCheckList.capacity) {
+      size_t new_cap = cfiCheckList.capacity *2 + 1;
+      // potentially realloc()
+      EntryDestCFI* old = cfiCheckList.cfi_list;
+      cfiCheckList.capacity = new_cap;
+      cfiCheckList.cfi_list = new EntryDestCFI[new_cap];
+      for (size_t i = 0; i < cfiCheckList.size; ++i) {
+        cfiCheckList.cfi_list[i] = old[i];
+      }
+      delete[] old;
     }
     cfiCheckList.size++;
     size_t size = cfiCheckList.size;
