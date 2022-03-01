@@ -6,7 +6,7 @@
         "configurations": [
 
                 {
-                        "name": "(gdb) Launch",
+                        "name": "loop.js",
                         "type": "cppdbg",
                         "request": "launch",
                         "program": "${workspaceFolder}/cfi-test/js",
@@ -17,6 +17,37 @@
                                 "--ion-inlining=off",
                                 "--ion-offthread-compile=off",
                                 "cfi-test/loop.js"
+                        ],
+                        "stopAtEntry": false,
+                        "cwd": "${workspaceFolder}",
+                        "environment": [{"name": "IONFLAGS", "value": "bl-all"}],
+                        "externalConsole": false,
+                        "MIMode": "gdb",
+                        "setupCommands": [
+                                {
+                                        "description": "Enable pretty-printing for gdb",
+                                        "text": "-enable-pretty-printing",
+                                        "ignoreFailures": true
+                                },
+                                {
+                                        "description": "Set Disassembly Flavor to Intel",
+                                        "text": "-gdb-set disassembly-flavor intel",
+                                        "ignoreFailures": true
+                                }
+                        ]
+                },
+                {
+                        "name": "t.js",
+                        "type": "cppdbg",
+                        "request": "launch",
+                        "program": "${workspaceFolder}/cfi-test/js",
+                        "args": [
+                                "--ion-warmup-threshold=6",
+                                "--baseline-warmup-threshold=4", 
+                                "--blinterp-warmup-threshold=2",
+                                "--ion-inlining=off",
+                                "--ion-offthread-compile=off",
+                                "cfi-test/t.js"
                         ],
                         "stopAtEntry": false,
                         "cwd": "${workspaceFolder}",
