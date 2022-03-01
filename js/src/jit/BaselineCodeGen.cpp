@@ -319,6 +319,7 @@ MethodStatus BaselineCompiler::compile() {
     printf("searchme: 319 start: %p\n", code->raw());
     printf("searchme: 320 end: %p\n", code->rawEnd());
     entry.init(code, code->raw(), code->rawEnd(), script, str.release());
+    cx->runtime()->jitRuntime()->addCFI(code->raw(), code->rawEnd());
 
     JitcodeGlobalTable* globalTable =
         cx->runtime()->jitRuntime()->getJitcodeGlobalTable();
@@ -1484,8 +1485,6 @@ bool BaselineCompilerCodeGen::emitWarmUpCounterIncrement() {
     }
 #endif
 
-    masm.add_cfi(osrDataReg);
-    masm.add_cfi(OsrFrameReg);
     printf("searchme: osrDataReg's offset is: %lu\n", IonOsrTempData::offsetOfJitCode());
 
     // Jump into Ion.

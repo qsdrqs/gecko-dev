@@ -16,7 +16,7 @@
                                 "--blinterp-warmup-threshold=2",
                                 "--ion-inlining=off",
                                 "--ion-offthread-compile=off",
-                                "cfi-test/t.js"
+                                "cfi-test/loop.js"
                         ],
                         "stopAtEntry": false,
                         "cwd": "${workspaceFolder}",
