@@ -1482,8 +1482,6 @@ bool BaselineCompilerCodeGen::emitWarmUpCounterIncrement() {
     }
 #endif
 
-    masm.add_cfi(osrDataReg);
-    masm.add_cfi(OsrFrameReg);
     printf("searchme: osrDataReg's offset is: %lu\n", IonOsrTempData::offsetOfJitCode());
 
     // Jump into Ion.
