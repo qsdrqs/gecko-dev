@@ -316,6 +316,8 @@ MethodStatus BaselineCompiler::compile() {
     }
 
     JitcodeGlobalEntry::BaselineEntry entry;
+    printf("searchme: 319 start: %p\n", code->raw());
+    printf("searchme: 320 end: %p\n", code->rawEnd());
     entry.init(code, code->raw(), code->rawEnd(), script, str.release());
 
     JitcodeGlobalTable* globalTable =
