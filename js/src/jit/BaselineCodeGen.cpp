@@ -6875,6 +6875,7 @@ bool BaselineInterpreterGenerator::generate(BaselineInterpreter& interpreter) {
     {
       JitcodeGlobalEntry::BaselineInterpreterEntry entry;
       entry.init(code, code->raw(), code->rawEnd());
+      cx->runtime()->jitRuntime()->addCFI(code->raw(), code->rawEnd());
 
       JitcodeGlobalTable* globalTable =
           cx->runtime()->jitRuntime()->getJitcodeGlobalTable();
