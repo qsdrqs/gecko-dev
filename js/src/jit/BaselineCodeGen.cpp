@@ -317,6 +317,7 @@ MethodStatus BaselineCompiler::compile() {
 
     JitcodeGlobalEntry::BaselineEntry entry;
     entry.init(code, code->raw(), code->rawEnd(), script, str.release());
+    cx->runtime()->jitRuntime()->addCFI(code->raw(), code->rawEnd());
 
     JitcodeGlobalTable* globalTable =
         cx->runtime()->jitRuntime()->getJitcodeGlobalTable();
