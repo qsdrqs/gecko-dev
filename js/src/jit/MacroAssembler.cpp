@@ -2319,14 +2319,12 @@ void MacroAssembler::decode_cfi(JitRuntime::CFICheckList* fptr, Register objreg)
   passABIArg(temp);
   passABIArg(objreg);
   callWithABI<Fn, DecodeCFI>();
-  check_cfi_reg(ReturnReg);
-  check_cfi_reg(objreg);
-  fflush(stdout);
-
-  PopRegsInMask(save);
   mov(ReturnReg, objreg);
-  check_cfi_reg(ReturnReg);
-  check_cfi_reg(objreg);
+
+  LiveRegisterSet ignore;
+  ignore.add(objreg);
+
+  PopRegsInMaskIgnore(save, ignore);
 }
 
 #ifdef JS_TRACE_LOGGING

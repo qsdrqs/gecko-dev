@@ -19,3 +19,5 @@ ac_add_options --enable-debug
 # Enable optimizations as well so that the test suite runs much faster. If
 # you are having trouble using a debugger, you should disable optimization.
 ac_add_options --disable-optimize
+
+ac_add_options --disable-tests
