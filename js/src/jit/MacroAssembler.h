@@ -5199,6 +5199,7 @@ class MacroAssembler : public MacroAssemblerSpecific {
   void check_cfi_reg(Register fptr);
   void check_cfi_abi(JitRuntime::CFICheckList* fptr, Register objreg);
   void add_cfi(Register fptr);
+  void decode_cfi(JitRuntime::CFICheckList* fptr, Register objreg);
 
 #ifdef JS_TRACE_LOGGING
   void loadTraceLogger(Register logger);

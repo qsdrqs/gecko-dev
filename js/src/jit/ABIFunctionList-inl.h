@@ -127,6 +127,7 @@ namespace jit {
   _(js::jit::CheckCFI_Reg)                                            \
   _(js::jit::CheckCFI_Abi)                                            \
   _(js::jit::CreateMatchResultFallbackFunc)                           \
+  _(js::jit::DecodeCFI)                                               \
   _(js::jit::EqualStringsHelperPure)                                  \
   _(js::jit::FinishBailoutToBaseline)                                 \
   _(js::jit::FrameIsDebuggeeCheck)                                    \

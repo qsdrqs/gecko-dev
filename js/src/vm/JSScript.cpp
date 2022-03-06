@@ -2380,8 +2380,8 @@ bool JSScript::fullyInitFromStencil(
 
   // Whether we are a newborn script or an existing lazy script, we should
   // already be pointing to the interpreter trampoline.
-  MOZ_ASSERT_IF(jit::HasJitBackend(),
-                script->isUsingInterpreterTrampoline(cx->runtime()));
+  // MOZ_ASSERT_IF(jit::HasJitBackend(),
+  //               script->isUsingInterpreterTrampoline(cx->runtime()));
 
   // If we are using an existing lazy script, record enough info to be able to
   // rollback on failure.
@@ -3133,7 +3133,7 @@ BaseScript::BaseScript(uint8_t* stubEntry, JSFunction* function,
   MOZ_ASSERT(extent_.toStringStart <= extent_.sourceStart);
   MOZ_ASSERT(extent_.sourceStart <= extent_.sourceEnd);
   MOZ_ASSERT(extent_.sourceEnd <= extent_.toStringEnd);
-  printf("searchme: BaseScript init %p\n", code);
+  printf("searchme: BaseScript init %p\n", stubEntry);
   uint8_t * cfi_code = (uint8_t *)(((uint64_t)stubEntry)^0xeadbeef0);
   setHeaderPtr(cfi_code);
   printf("searchme: BaseScript changed to %p\n", cfi_code);

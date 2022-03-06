@@ -2678,5 +2678,17 @@ void AddCFIValidPtr(uintptr_t ptr) {
   fprintf(stderr, "searchme: AddCFIValidPtr adding %p\n", (void *)ptr);
 }
 
+uint8_t * DecodeCFI(uintptr_t checklist, uintptr_t objreg_in) {
+  JitRuntime::CFICheckList* cfiCheckList = (JitRuntime::CFICheckList*)checklist;
+  uint8_t* objReg = (uint8_t*)objreg_in;
+  AutoUnsafeCallWithABI unsafe;
+
+  printf("searchme: calling DecodeCFI with %p\n", objReg);
+  uint8_t * cfi_code = (uint8_t *)(((uint64_t)objReg)^0xeadbeef0);
+  printf("searchme: DecodeCFI changed objreg to %p\n", cfi_code);
+  fflush(stdout);
+  return cfi_code;
+}
+
 }  // namespace jit
 }  // namespace js
