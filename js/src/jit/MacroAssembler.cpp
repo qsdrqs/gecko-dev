@@ -2303,7 +2303,7 @@ void MacroAssembler::add_cfi(Register fptr) {
   PopRegsInMask(save);
 }
 
-void MacroAssembler::decode_cfi(JitRuntime::CFICheckList* fptr, Register objreg) {
+void MacroAssembler::decode_cfi(JitRuntime* rt, Register objreg) {
   fprintf(stderr, "searchme: calling decode_cfi with %s\n", objreg.name());
   AllocatableRegisterSet regs(RegisterSet::Volatile());
   LiveRegisterSet save(regs.asLiveSet());
@@ -2313,9 +2313,9 @@ void MacroAssembler::decode_cfi(JitRuntime::CFICheckList* fptr, Register objreg)
 
   Register temp = regs.takeAnyGeneral();
 
-  using Fn = uint8_t* (*)(uintptr_t fptr, uintptr_t objreg);
+  using Fn = uint8_t* (*)(uintptr_t runtime, uintptr_t objreg);
   setupUnalignedABICall(temp);
-  movePtr(ImmPtr(fptr), temp);
+  movePtr(ImmPtr(rt), temp);
   passABIArg(temp);
   passABIArg(objreg);
   callWithABI<Fn, DecodeCFI>();

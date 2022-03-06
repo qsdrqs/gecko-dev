@@ -5536,11 +5536,13 @@ void CodeGenerator::visitCallKnown(LCallKnown* call) {
 
   // Finally call the function in objreg.
   masm.check_cfi_reg(objreg);
-  masm.decode_cfi(getCFICheckList(), objreg);
+  masm.decode_cfi(jitruntime_, objreg);
   masm.check_cfi_reg(objreg);
   masm.check_cfi_abi(getCFICheckList(), objreg);
   fflush(stdout); fflush(stderr);
   uint32_t callOffset = masm.callJit(objreg);
+  printf("searchme: after callJit\n");
+  fflush(stdout); fflush(stderr);
   markSafepointAt(callOffset, call);
 
   if (call->mir()->maybeCrossRealm()) {

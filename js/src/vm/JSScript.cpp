@@ -3134,9 +3134,9 @@ BaseScript::BaseScript(uint8_t* stubEntry, JSFunction* function,
   MOZ_ASSERT(extent_.sourceStart <= extent_.sourceEnd);
   MOZ_ASSERT(extent_.sourceEnd <= extent_.toStringEnd);
   printf("searchme: BaseScript init %p\n", stubEntry);
-  uint8_t * cfi_code = (uint8_t *)(((uint64_t)stubEntry)^0xeadbeef0);
-  setHeaderPtr(cfi_code);
-  printf("searchme: BaseScript changed to %p\n", cfi_code);
+  // uint8_t * cfi_code = (uint8_t *)(((uint64_t)stubEntry)^0xeadbeef0);
+  // setHeaderPtr(cfi_code);
+  // printf("searchme: BaseScript changed to %p\n", cfi_code);
 }
 
 /* static */
@@ -3151,8 +3151,11 @@ BaseScript* BaseScript::New(JSContext* cx, JS::Handle<JSFunction*> function,
 
   uint8_t* stubEntry = nullptr;
   if (jit::HasJitBackend()) {
+    printf("searchme: stubEntry init %p\n", stubEntry);
     stubEntry = cx->runtime()->jitRuntime()->interpreterStub().value;
     cx->runtime()->jitRuntime()->addCFI(stubEntry, stubEntry+0);
+    stubEntry = cx->runtime()->jitRuntime()->encodeCFI(stubEntry);
+    printf("searchme: stubEntry changed to %p\n", stubEntry);
   }
 
   MOZ_ASSERT_IF(function,
@@ -3193,21 +3196,29 @@ BaseScript* BaseScript::CreateRawLazy(JSContext* cx, uint32_t ngcthings,
 
   return lazy;
 }
+void BaseScript::setJitCodeRaw(uint8_t* code, JSRuntime* rt) {
+    printf("searchme: setJitCodeRaw init %p\n", code);
+    // uint8_t * cfi_code = (uint8_t *)(((uint64_t)code)^0xeadbeef0);
+    uint8_t * cfi_code = rt->jitRuntime()->encodeCFI(code);
+    setHeaderPtr(cfi_code);
+    printf("searchme: setJitCodeRaw changed to %p\n", cfi_code);
+    // setHeaderPtr(code);
+}
 
 void JSScript::updateJitCodeRaw(JSRuntime* rt) {
   MOZ_ASSERT(rt);
   if (hasBaselineScript() && baselineScript()->hasPendingIonCompileTask()) {
     MOZ_ASSERT(!isIonCompilingOffThread());
-    setJitCodeRaw(rt->jitRuntime()->lazyLinkStub().value);
+    setJitCodeRaw(rt->jitRuntime()->lazyLinkStub().value, rt);
   } else if (hasIonScript()) {
     jit::IonScript* ion = ionScript();
-    setJitCodeRaw(ion->method()->raw());
+    setJitCodeRaw(ion->method()->raw(), rt);
   } else if (hasBaselineScript()) {
-    setJitCodeRaw(baselineScript()->method()->raw());
+    setJitCodeRaw(baselineScript()->method()->raw(), rt);
   } else if (hasJitScript() && js::jit::IsBaselineInterpreterEnabled()) {
-    setJitCodeRaw(rt->jitRuntime()->baselineInterpreter().codeRaw());
+    setJitCodeRaw(rt->jitRuntime()->baselineInterpreter().codeRaw(), rt);
   } else {
-    setJitCodeRaw(rt->jitRuntime()->interpreterStub().value);
+    setJitCodeRaw(rt->jitRuntime()->interpreterStub().value, rt);
   }
   MOZ_ASSERT(jitCodeRaw());
 }

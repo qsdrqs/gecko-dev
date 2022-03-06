@@ -690,7 +690,7 @@ void CheckCFI(uint32_t ptr);
 void CheckCFI_Reg(uintptr_t ptr);
 void CheckCFI_Abi(uintptr_t fptr, uintptr_t objreg);
 void AddCFIValidPtr(uintptr_t ptr);
-uint8_t * DecodeCFI(uintptr_t fptr, uintptr_t objreg);
+uint8_t * DecodeCFI(uintptr_t runtime, uintptr_t objreg);
 
 }  // namespace jit
 }  // namespace js

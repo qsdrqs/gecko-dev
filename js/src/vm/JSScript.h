@@ -1441,14 +1441,15 @@ class BaseScript : public gc::TenuredCellWithNonGCPointer<uint8_t> {
              ScriptSourceObject* sourceObject, const SourceExtent& extent,
              uint32_t immutableFlags);
 
-  void setJitCodeRaw(uint8_t* code) {
-    printf("searchme: setJitCodeRaw init %p\n", code);
-
-    uint8_t * cfi_code = (uint8_t *)(((uint64_t)code)^0xeadbeef0);
-    setHeaderPtr(cfi_code);
-    printf("searchme: setJitCodeRaw changed to %p\n", cfi_code);
-    // setHeaderPtr(code);
-  }
+  void setJitCodeRaw(uint8_t* code, JSRuntime* rt);
+  // void setJitCodeRaw(uint8_t* code, JSRuntime* rt) {
+  //   printf("searchme: setJitCodeRaw init %p\n", code);
+  //   // uint8_t * cfi_code = (uint8_t *)(((uint64_t)code)^0xeadbeef0);
+  //   uint8_t * cfi_code = rt->encodeCFI(code);
+  //   setHeaderPtr(cfi_code);
+  //   printf("searchme: setJitCodeRaw changed to %p\n", cfi_code);
+  //   // setHeaderPtr(code);
+  // }
 
  public:
   static BaseScript* New(JSContext* cx, JS::Handle<JSFunction*> function,

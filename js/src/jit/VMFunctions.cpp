@@ -2655,7 +2655,7 @@ void CheckCFI(uint32_t ptr) {
 
 void CheckCFI_Reg(uintptr_t ptr) {
   AutoUnsafeCallWithABI unsafe;
-  fprintf(stderr, "searchme: CheckCFI checking %p\n", (void *)ptr);
+  fprintf(stderr, "searchme: CheckCFI_Reg checking %p\n", (void *)ptr);
 }
 
 void CheckCFI_Abi(uintptr_t checklist, uintptr_t objreg) {
@@ -2665,7 +2665,8 @@ void CheckCFI_Abi(uintptr_t checklist, uintptr_t objreg) {
 
   for (size_t i = 0; i < cfiCheckList->size; i++) {
     if (cfiCheckList->cfi_list[i].enter == objReg) {
-      fprintf(stderr, "searchme: CheckCFI success when checking %p\n", objReg);
+      fprintf(stderr, "searchme: CheckCFI_Abi success when checking %p\n", objReg);
+      fflush(stdout); fflush(stderr);
       return;
     }
   }
@@ -2675,18 +2676,18 @@ void CheckCFI_Abi(uintptr_t checklist, uintptr_t objreg) {
 
 void AddCFIValidPtr(uintptr_t ptr) {
   AutoUnsafeCallWithABI unsafe;
-  fprintf(stderr, "searchme: AddCFIValidPtr adding %p\n", (void *)ptr);
+  // fprintf(stderr, "searchme: AddCFIValidPtr adding %p\n", (void *)ptr);
 }
 
-uint8_t * DecodeCFI(uintptr_t checklist, uintptr_t objreg_in) {
-  JitRuntime::CFICheckList* cfiCheckList = (JitRuntime::CFICheckList*)checklist;
+uint8_t * DecodeCFI(uintptr_t runtime, uintptr_t objreg_in) {
+  JitRuntime * rt = (JitRuntime *) runtime;
   uint8_t* objReg = (uint8_t*)objreg_in;
   AutoUnsafeCallWithABI unsafe;
 
   printf("searchme: calling DecodeCFI with %p\n", objReg);
-  uint8_t * cfi_code = (uint8_t *)(((uint64_t)objReg)^0xeadbeef0);
+  uint8_t * cfi_code = rt->decodeCFI(objReg);
   printf("searchme: DecodeCFI changed objreg to %p\n", cfi_code);
-  fflush(stdout);
+  fflush(stdout); fflush(stderr);
   return cfi_code;
 }
 

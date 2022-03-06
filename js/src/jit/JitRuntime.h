@@ -293,14 +293,25 @@ class JitRuntime {
     size_t size;
     size_t capacity;
   };
+
+  struct CFIKey {
+    uint8_t * key;
+  };
+
   CFICheckList cfiCheckList;
+  CFIKey cfiKey;
+
   JitRuntime() {
     cfiCheckList.capacity = 1024;
     cfiCheckList.size = 0;
     cfiCheckList.cfi_list = new EntryDestCFI[cfiCheckList.capacity];
+    // cfiKey.key = (uint8_t *) 0xeadbeef0;
+    cfiKey.key = (uint8_t *) nullptr;
   }
 
   bool addCFI(uint8_t* enter, uint8_t* exit) {
+    fprintf(stderr, "searchme: addCFI adding %p\n", enter);
+    fflush(stdout); fflush(stderr);
     if (cfiCheckList.size == cfiCheckList.capacity) {
       size_t new_cap = cfiCheckList.capacity *2 + 1;
       // potentially realloc()
@@ -318,6 +329,18 @@ class JitRuntime {
     cfiCheckList.cfi_list[size - 1].enter = enter;
     cfiCheckList.cfi_list[size - 1].exit = exit;
     return true;
+  }
+
+  uint8_t * encodeCFI(uint8_t * in) const {
+    uint8_t * out = (uint8_t *)(((uintptr_t) in)^ ((uintptr_t) cfiKey.key));
+    // uint8_t * out = in;
+    return out;
+  }
+
+  uint8_t * decodeCFI(uint8_t * in) const {
+    uint8_t * out = (uint8_t *)(((uintptr_t) in)^ ((uintptr_t) cfiKey.key));
+    // uint8_t * out = in;
+    return out;
   }
 
   ~JitRuntime();
