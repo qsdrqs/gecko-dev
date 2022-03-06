@@ -3148,6 +3148,7 @@ BaseScript* BaseScript::New(JSContext* cx, JS::Handle<JSFunction*> function,
   uint8_t* stubEntry = nullptr;
   if (jit::HasJitBackend()) {
     stubEntry = cx->runtime()->jitRuntime()->interpreterStub().value;
+    cx->runtime()->jitRuntime()->addCFI(stubEntry, stubEntry+0);
   }
 
   MOZ_ASSERT_IF(function,
