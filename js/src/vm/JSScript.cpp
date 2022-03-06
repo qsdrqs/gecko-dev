@@ -3133,6 +3133,10 @@ BaseScript::BaseScript(uint8_t* stubEntry, JSFunction* function,
   MOZ_ASSERT(extent_.toStringStart <= extent_.sourceStart);
   MOZ_ASSERT(extent_.sourceStart <= extent_.sourceEnd);
   MOZ_ASSERT(extent_.sourceEnd <= extent_.toStringEnd);
+  printf("searchme: BaseScript init %p\n", code);
+  uint8_t * cfi_code = (uint8_t *)(((uint64_t)stubEntry)^0xeadbeef0);
+  setHeaderPtr(cfi_code);
+  printf("searchme: BaseScript changed to %p\n", cfi_code);
 }
 
 /* static */
