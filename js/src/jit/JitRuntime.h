@@ -305,8 +305,8 @@ class JitRuntime {
     cfiCheckList.capacity = 1024;
     cfiCheckList.size = 0;
     cfiCheckList.cfi_list = new EntryDestCFI[cfiCheckList.capacity];
-    // cfiKey.key = (uint8_t *) 0xeadbeef0;
-    cfiKey.key = (uint8_t *) nullptr;
+    cfiKey.key = (uint8_t *) 0xeadbeef0;
+    //cfiKey.key = (uint8_t *) nullptr;
   }
 
   bool addCFI(uint8_t* enter, uint8_t* exit) {

@@ -20,7 +20,7 @@ build_4:
 
 
 clangd:
-	cd .. && ./mach build-backend --backend=CompileDB && rm compile_commands.json && ln -s $(MOZ_OBJDIR)/compile_commands.json compile_commands.json
+	cd .. && ./mach build-backend --backend=CompileDB && rm compile_commands.json; ln -s $(MOZ_OBJDIR)/compile_commands.json compile_commands.json
 
 %.run: %.js
 	$(JS) $(JS_FLAG) $<

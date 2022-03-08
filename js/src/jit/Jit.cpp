@@ -207,5 +207,6 @@ EnterJitStatus js::jit::MaybeEnterJit(JSContext* cx, RunState& state) {
   cx->spewer().disableSpewing();
 #endif
 
+  code = cx->runtime()->jitRuntime()->decodeCFI(code);
   return EnterJit(cx, state, code);
 }

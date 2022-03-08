@@ -5541,7 +5541,7 @@ void CodeGenerator::visitCallKnown(LCallKnown* call) {
   masm.check_cfi_abi(getCFICheckList(), objreg);
   fflush(stdout); fflush(stderr);
   uint32_t callOffset = masm.callJit(objreg);
-  printf("searchme: after callJit\n");
+  masm.printf("searchme: after callJit\n");
   fflush(stdout); fflush(stderr);
   markSafepointAt(callOffset, call);
 
