@@ -20,7 +20,7 @@
                         ],
                         "stopAtEntry": false,
                         "cwd": "${workspaceFolder}",
-                        "environment": [{"name": "IONFLAGS", "value": "bl-all"}],
+                        "environment": [{"name": "IONFLAGS", "value": ""}],
                         "externalConsole": false,
                         "MIMode": "gdb",
                         "setupCommands": [
@@ -51,7 +51,7 @@
                         ],
                         "stopAtEntry": false,
                         "cwd": "${workspaceFolder}",
-                        "environment": [{"name": "IONFLAGS", "value": "bl-all"}],
+                        "environment": [{"name": "IONFLAGS", "value": ""}],
                         "externalConsole": false,
                         "MIMode": "gdb",
                         "setupCommands": [
