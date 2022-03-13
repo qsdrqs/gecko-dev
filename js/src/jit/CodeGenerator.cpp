@@ -5535,10 +5535,10 @@ void CodeGenerator::visitCallKnown(LCallKnown* call) {
   masm.Push(Imm32(descriptor));
 
   // Finally call the function in objreg.
-  masm.check_cfi_reg(objreg);
+  // masm.check_cfi_reg(objreg);
   //masm.decode_cfi(jitruntime_, objreg);
-  masm.check_cfi_reg(objreg);
-  masm.check_cfi_abi(getCFICheckList(), objreg);
+  // masm.check_cfi_reg(objreg);
+  // masm.check_cfi_abi(getCFICheckList(), objreg);
   fflush(stdout); fflush(stderr);
   uint32_t callOffset = masm.callJit(objreg);
   masm.printf("searchme: after callJit\n");
@@ -12187,7 +12187,7 @@ bool CodeGenerator::link(JSContext* cx, const WarpSnapshot* snapshot) {
     JitcodeGlobalEntry::DummyEntry entry;
     printf("searchme: raw start: %p\n", code->raw());
     printf("searchme: raw end: %p\n", code->rawEnd());
-    addCFI(code->raw(), code->rawEnd());
+    // addCFI(code->raw(), code->rawEnd());
     entry.init(code, code->raw(), code->rawEnd());
 
     // Add entry to the global table.
