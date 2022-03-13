@@ -423,6 +423,9 @@ class Assembler : public AssemblerX86Shared {
       masm.movq_i64r(word.value, dest.encoding());
     }
   }
+  void movq(Imm64 imm64, Register dest) {
+    masm.movq_i64r(imm64.value, dest.encoding());
+  }
   void movq(ImmPtr imm, Register dest) {
     movq(ImmWord(uintptr_t(imm.value)), dest);
   }
@@ -988,6 +991,13 @@ class Assembler : public AssemblerX86Shared {
       xorl(dest, dest);
     } else {
       movq(word, dest);
+    }
+  }
+  void mov(Imm64 imm64, Register dest) {
+    if (imm64.value == 0) {
+      xorl(dest, dest);
+    } else {
+      movq(imm64, dest);
     }
   }
   void mov(ImmPtr imm, Register dest) { movq(imm, dest); }

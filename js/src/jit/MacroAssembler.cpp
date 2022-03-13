@@ -2249,7 +2249,7 @@ void MacroAssembler::check_cfi(uint32_t fVirReg) {
 }
 
 void MacroAssembler::check_cfi_reg(Register fptr) {
-  fprintf(stderr, "searchme: calling check_cfi with %s\n", fptr.name());
+  fprintf(stderr, "searchme: calling check_cfi_reg with %s\n", fptr.name());
   AllocatableRegisterSet regs(RegisterSet::Volatile());
   LiveRegisterSet save(regs.asLiveSet());
   PushRegsInMask(save);
@@ -2305,8 +2305,11 @@ void MacroAssembler::add_cfi(Register fptr) {
 }
 
 void MacroAssembler::decode_cfi(JitRuntime* rt, Register objreg) {
-  uint64_t key = (uint64_t)rt->cfiKey.key;
-  xor64(Imm64(key), objreg);
+  // uint64_t key = (uint64_t)rt->cfiKey.key;
+  // xor64(Imm64(key), objreg);
+  Register keyreg = Register::FromName("r12");
+  check_cfi_reg(keyreg);
+  xorq(keyreg, objreg);
   fprintf(stderr, "searchme: calling decode_cfi with %s\n", objreg.name());
   /*
   AllocatableRegisterSet regs(RegisterSet::Volatile());
