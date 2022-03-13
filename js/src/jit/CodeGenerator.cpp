@@ -5481,11 +5481,6 @@ void CodeGenerator::visitCallKnown(LCallKnown* call) {
   Register objreg = ToRegister(call->getTempObject());
   masm.printf("searchme: in visitCallKnown\n");
 
-  // load key
-  uint64_t key = (uint64_t)(GetJitContext()->runtime->jitRuntime()->cfiKey.key);
-  Register keyreg = Register::FromName("r12");
-  masm.mov(Imm64(key), keyreg);
-
   uint32_t tempVirtualReg = call->getTempObject()->virtualRegister();
   masm.check_cfi(tempVirtualReg);
   //masm.check_cfi(maybeTemp);

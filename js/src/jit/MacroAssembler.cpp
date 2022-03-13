@@ -2120,7 +2120,12 @@ void MacroAssembler::loadJitCodeRaw(Register func, Register dest) {
                 "jitCodeRaw_");
   loadPrivate(Address(func, JSFunction::offsetOfJitInfoOrScript()), dest);
   loadPtr(Address(dest, BaseScript::offsetOfJitCodeRaw()), dest);
-  decode_cfi(GetJitContext()->runtime->jitRuntime(), dest);
+  // load key
+  uint64_t key = (uint64_t)(GetJitContext()->runtime->jitRuntime()->cfiKey.key);
+  Register keyreg = Register::FromName("r12");
+  mov(Imm64(key), keyreg);
+
+  decode_cfi(dest);
 }
 
 void MacroAssembler::loadBaselineJitCodeRaw(Register func, Register dest,
@@ -2304,14 +2309,16 @@ void MacroAssembler::add_cfi(Register fptr) {
   PopRegsInMask(save);
 }
 
-void MacroAssembler::decode_cfi(JitRuntime* rt, Register objreg) {
+void MacroAssembler::decode_cfi(Register objreg) {
   // uint64_t key = (uint64_t)rt->cfiKey.key;
   // xor64(Imm64(key), objreg);
   Register keyreg = Register::FromName("r12");
-  check_cfi_reg(keyreg);
   xorq(keyreg, objreg);
   fprintf(stderr, "searchme: calling decode_cfi with %s\n", objreg.name());
-  /*
+}
+
+void MacroAssembler::decode_cfi(JitRuntime* rt, Register objreg) {
+  fprintf(stderr, "searchme: calling decode_cfi with %s\n", objreg.name());
   AllocatableRegisterSet regs(RegisterSet::Volatile());
   LiveRegisterSet save(regs.asLiveSet());
   PushRegsInMask(save);
@@ -2332,7 +2339,6 @@ void MacroAssembler::decode_cfi(JitRuntime* rt, Register objreg) {
   ignore.add(objreg);
 
   PopRegsInMaskIgnore(save, ignore);
-  */
 }
 
 #ifdef JS_TRACE_LOGGING
