@@ -945,15 +945,7 @@ CodeGenerator::CodeGenerator(MIRGenerator* gen, LIRGraph* graph,
                              MacroAssembler* masm)
     : CodeGeneratorSpecific(gen, graph, masm),
       ionScriptLabels_(gen->alloc()),
-      ionNurseryObjectLabels_(gen->alloc()),
-      scriptCounts_(nullptr),
-      realmStubsToReadBarrier_(0) {}
-
-CodeGenerator::CodeGenerator(MIRGenerator* gen, LIRGraph* graph, JSContext* cx,
-                             MacroAssembler* masm)
-    : CodeGeneratorSpecific(gen, graph, masm),
-      ionScriptLabels_(gen->alloc()),
-      jitruntime_(cx->runtime()->jitRuntime()),
+      jitruntime_(gen->runtime->jitRuntime()),
       ionNurseryObjectLabels_(gen->alloc()),
       scriptCounts_(nullptr),
       realmStubsToReadBarrier_(0) {}
@@ -12187,7 +12179,7 @@ bool CodeGenerator::link(JSContext* cx, const WarpSnapshot* snapshot) {
     JitcodeGlobalEntry::DummyEntry entry;
     printf("searchme: raw start: %p\n", code->raw());
     printf("searchme: raw end: %p\n", code->rawEnd());
-    // addCFI(code->raw(), code->rawEnd());
+    addCFI(code->raw(), code->rawEnd());
     entry.init(code, code->raw(), code->rawEnd());
 
     // Add entry to the global table.

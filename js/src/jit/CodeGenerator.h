@@ -1,5 +1,4 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*-
-      jitruntime_(cx->runtime()->jitRuntime()),
  * vim: set ts=8 sts=2 et sw=2 tw=80:
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -97,8 +96,6 @@ class CodeGenerator final : public CodeGeneratorSpecific {
                                   const StoreOutputTo& out);
 
  public:
-  CodeGenerator(MIRGenerator* gen, LIRGraph* graph, JSContext* cx,
-                MacroAssembler* masm = nullptr);
   CodeGenerator(MIRGenerator* gen, LIRGraph* graph,
                 MacroAssembler* masm = nullptr);
   ~CodeGenerator();

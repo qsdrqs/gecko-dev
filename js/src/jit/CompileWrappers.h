@@ -61,7 +61,7 @@ class CompileRuntime {
   const uint32_t* addressOfGCZealModeBits();
 #endif
 
-  const JitRuntime* jitRuntime();
+  JitRuntime* jitRuntime();
 
   // Compilation does not occur off thread when the Gecko Profiler is enabled.
   GeckoProfilerRuntime& geckoProfiler();

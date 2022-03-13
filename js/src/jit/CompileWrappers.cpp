@@ -30,7 +30,7 @@ const uint32_t* CompileRuntime::addressOfGCZealModeBits() {
 }
 #endif
 
-const JitRuntime* CompileRuntime::jitRuntime() {
+JitRuntime* CompileRuntime::jitRuntime() {
   return runtime()->jitRuntime();
 }
 

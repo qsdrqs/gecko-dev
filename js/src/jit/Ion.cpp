@@ -1570,47 +1570,6 @@ CodeGenerator* GenerateCode(MIRGenerator* mir, LIRGraph* lir) {
   return codegen.release();
 }
 
-CodeGenerator* GenerateCode(MIRGenerator* mir, LIRGraph* lir, JSContext* cx) {
-  TraceLoggerThread* logger = TraceLoggerForCurrentThread();
-  AutoTraceLog log(logger, TraceLogger_GenerateCode);
-
-  auto codegen = MakeUnique<CodeGenerator>(mir, lir, cx);
-  if (!codegen) {
-    return nullptr;
-  }
-
-  if (!codegen->generate()) {
-    return nullptr;
-  }
-
-  return codegen.release();
-}
-
-CodeGenerator* CompileBackEnd(MIRGenerator* mir, WarpSnapshot* snapshot, JSContext* cx) {
-  // Everything in CompileBackEnd can potentially run on a helper thread.
-  AutoEnterIonBackend enter;
-  AutoSpewEndFunction spewEndFunction(mir);
-
-  {
-    WarpCompilation comp(mir->alloc());
-    WarpBuilder builder(*snapshot, *mir, &comp);
-    if (!builder.build()) {
-      return nullptr;
-    }
-  }
-
-  if (!OptimizeMIR(mir)) {
-    return nullptr;
-  }
-
-  LIRGraph* lir = GenerateLIR(mir);
-  if (!lir) {
-    return nullptr;
-  }
-
-  return GenerateCode(mir, lir, cx);
-}
-
 CodeGenerator* CompileBackEnd(MIRGenerator* mir, WarpSnapshot* snapshot) {
   // Everything in CompileBackEnd can potentially run on a helper thread.
   AutoEnterIonBackend enter;
@@ -1760,7 +1719,7 @@ static AbortReason IonCompile(JSContext* cx, HandleScript script,
   bool succeeded = false;
   {
     gc::AutoSuppressGC suppressGC(cx);
-    UniquePtr<CodeGenerator> codegen(CompileBackEnd(mirGen, snapshot, cx));
+    UniquePtr<CodeGenerator> codegen(CompileBackEnd(mirGen, snapshot));
     if (!codegen) {
       JitSpew(JitSpew_IonAbort, "Failed during back-end compilation.");
       if (cx->isExceptionPending()) {

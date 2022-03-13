@@ -319,7 +319,7 @@ MethodStatus BaselineCompiler::compile() {
     printf("searchme: 319 start: %p\n", code->raw());
     printf("searchme: 320 end: %p\n", code->rawEnd());
     entry.init(code, code->raw(), code->rawEnd(), script, str.release());
-    // cx->runtime()->jitRuntime()->addCFI(code->raw(), code->rawEnd());
+    cx->runtime()->jitRuntime()->addCFI(code->raw(), code->rawEnd());
 
     JitcodeGlobalTable* globalTable =
         cx->runtime()->jitRuntime()->getJitcodeGlobalTable();
@@ -6877,7 +6877,7 @@ bool BaselineInterpreterGenerator::generate(BaselineInterpreter& interpreter) {
     {
       JitcodeGlobalEntry::BaselineInterpreterEntry entry;
       entry.init(code, code->raw(), code->rawEnd());
-      // cx->runtime()->jitRuntime()->addCFI(code->raw(), code->rawEnd());
+      cx->runtime()->jitRuntime()->addCFI(code->raw(), code->rawEnd());
 
       JitcodeGlobalTable* globalTable =
           cx->runtime()->jitRuntime()->getJitcodeGlobalTable();
