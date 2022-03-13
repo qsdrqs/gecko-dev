@@ -305,7 +305,13 @@ class JitRuntime {
     cfiCheckList.capacity = 1024;
     cfiCheckList.size = 0;
     cfiCheckList.cfi_list = new EntryDestCFI[cfiCheckList.capacity];
-    cfiKey.key = (uint8_t *) 0xeadbeef0;
+    srand(time(NULL));
+#ifdef DEBUG
+    // for gc mask
+    cfiKey.key = (uint8_t *) ((uint64_t)rand() & 0xfffffffffff0);
+#else
+    cfiKey.key = (uint8_t *) (uint64_t)rand();
+#endif
     //cfiKey.key = (uint8_t *) nullptr;
   }
 
