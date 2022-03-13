@@ -389,7 +389,8 @@ uint8_t* jit::LazyLinkTopActivation(JSContext* cx,
   MOZ_ASSERT(calleeScript->hasBaselineScript());
   MOZ_ASSERT(calleeScript->jitCodeRaw());
 
-  return calleeScript->jitCodeRaw();
+  uint8_t* jitCodeRawDecoded = cx->runtime()->jitRuntime()->decodeCFI(calleeScript->jitCodeRaw());
+  return jitCodeRawDecoded;
 }
 
 /* static */
