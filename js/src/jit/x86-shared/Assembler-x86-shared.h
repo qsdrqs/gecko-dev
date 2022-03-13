@@ -1087,11 +1087,6 @@ class AssemblerX86Shared : public AssemblerShared {
 
   void ret() {
     MOZ_ASSERT(hasCreator());
-    // printf("searchme: Returning by ret\n");
-    masm.push_r(X86Encoding::rax);
-    masm.push_i(0x12345678);
-    masm.pop_r(X86Encoding::rax);
-    masm.pop_r(X86Encoding::rax);
     masm.ret();
   }
   void retn(Imm32 n) {

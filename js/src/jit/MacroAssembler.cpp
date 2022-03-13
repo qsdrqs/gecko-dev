@@ -2120,11 +2120,6 @@ void MacroAssembler::loadJitCodeRaw(Register func, Register dest) {
                 "jitCodeRaw_");
   loadPrivate(Address(func, JSFunction::offsetOfJitInfoOrScript()), dest);
   loadPtr(Address(dest, BaseScript::offsetOfJitCodeRaw()), dest);
-  // load key
-  uint64_t key = (uint64_t)(GetJitContext()->runtime->jitRuntime()->cfiKey.key);
-  Register keyreg = Register::FromName("r12");
-  mov(Imm64(key), keyreg);
-
   decode_cfi(dest);
 }
 
@@ -2869,6 +2864,11 @@ MacroAssembler::MacroAssembler(JSContext* cx)
   jitContext_.emplace(cx, (js::jit::TempAllocator*)nullptr);
   alloc_.emplace(&cx->tempLifoAlloc());
   moveResolver_.setAllocator(*jitContext_->temp);
+  // load key
+  uint64_t key = (uint64_t)(GetJitContext()->runtime->jitRuntime()->cfiKey.key);
+  Register keyreg = Register::FromName("r12");
+  mov(Imm64(key), keyreg);
+
 #if defined(JS_CODEGEN_ARM)
   initWithAllocator();
   m_buffer.id = GetJitContext()->getNextAssemblerId();
@@ -2896,6 +2896,11 @@ MacroAssembler::MacroAssembler()
 
   moveResolver_.setAllocator(*jcx->temp);
 
+  // load key
+  uint64_t key = (uint64_t)(GetJitContext()->runtime->jitRuntime()->cfiKey.key);
+  Register keyreg = Register::FromName("r12");
+  mov(Imm64(key), keyreg);
+
 #if defined(JS_CODEGEN_ARM)
   initWithAllocator();
   m_buffer.id = jcx->getNextAssemblerId();
@@ -2914,6 +2919,11 @@ MacroAssembler::MacroAssembler(WasmToken, TempAllocator& alloc)
       dynamicAlignment_(false),
       emitProfilingInstrumentation_(false) {
   moveResolver_.setAllocator(alloc);
+
+  // load key
+  uint64_t key = (uint64_t)(GetJitContext()->runtime->jitRuntime()->cfiKey.key);
+  Register keyreg = Register::FromName("r12");
+  mov(Imm64(key), keyreg);
 
 #if defined(JS_CODEGEN_ARM)
   initWithAllocator();
