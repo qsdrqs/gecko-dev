@@ -2120,6 +2120,7 @@ void MacroAssembler::loadJitCodeRaw(Register func, Register dest) {
                 "jitCodeRaw_");
   loadPrivate(Address(func, JSFunction::offsetOfJitInfoOrScript()), dest);
   loadPtr(Address(dest, BaseScript::offsetOfJitCodeRaw()), dest);
+  decode_cfi(GetJitContext()->cx->runtime()->jitRuntime(), dest);
 }
 
 void MacroAssembler::loadBaselineJitCodeRaw(Register func, Register dest,
@@ -2142,6 +2143,7 @@ void MacroAssembler::loadBaselineJitCodeRaw(Register func, Register dest,
   // Load Baseline jitcode
   loadPtr(Address(dest, BaselineScript::offsetOfMethod()), dest);
   loadPtr(Address(dest, JitCode::offsetOfCode()), dest);
+  // decode_cfi(GetJitContext()->cx->runtime()->jitRuntime(), dest);
 }
 
 void MacroAssembler::loadBaselineFramePtr(Register framePtr, Register dest) {
