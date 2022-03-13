@@ -108,6 +108,17 @@ void MacroAssembler::xor64(Imm64 imm, Register64 dest) {
   }
 }
 
+void MacroAssembler::xor64(Imm64 imm, Register dest) {
+  fprintf(stderr, "searchme: in my xor 64\n");
+  if (INT32_MIN <= int64_t(imm.value) && int64_t(imm.value) <= INT32_MAX) {
+    xorq(Imm32(imm.value), dest);
+  } else {
+    ScratchRegisterScope scratch(*this);
+    movq(ImmWord(uintptr_t(imm.value)), scratch);
+    xorq(scratch, dest);
+  }
+}
+
 void MacroAssembler::orPtr(Register src, Register dest) { orq(src, dest); }
 
 void MacroAssembler::orPtr(Imm32 imm, Register dest) { orq(imm, dest); }

@@ -2305,7 +2305,10 @@ void MacroAssembler::add_cfi(Register fptr) {
 }
 
 void MacroAssembler::decode_cfi(JitRuntime* rt, Register objreg) {
+  uint64_t key = (uint64_t)rt->cfiKey.key;
+  xor64(Imm64(key), objreg);
   fprintf(stderr, "searchme: calling decode_cfi with %s\n", objreg.name());
+  /*
   AllocatableRegisterSet regs(RegisterSet::Volatile());
   LiveRegisterSet save(regs.asLiveSet());
   PushRegsInMask(save);
@@ -2326,6 +2329,7 @@ void MacroAssembler::decode_cfi(JitRuntime* rt, Register objreg) {
   ignore.add(objreg);
 
   PopRegsInMaskIgnore(save, ignore);
+  */
 }
 
 #ifdef JS_TRACE_LOGGING
