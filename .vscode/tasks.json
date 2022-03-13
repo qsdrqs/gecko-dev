@@ -17,6 +17,13 @@
       "problemMatcher": [
         "$gcc"
       ]
+    },
+    {
+      "label": "build && make out",
+      "command": "cd cfi-test && make && make out",
+      "problemMatcher": [
+        "$gcc"
+      ]
     }
   ]
 }

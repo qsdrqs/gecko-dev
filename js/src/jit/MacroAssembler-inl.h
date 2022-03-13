@@ -232,6 +232,7 @@ uint32_t MacroAssembler::callJitNoProfiler(Register callee) {
 
 uint32_t MacroAssembler::callJit(Register callee) {
   AutoProfilerCallInstrumentation profiler(*this);
+  decode_cfi(GetJitContext()->cx->runtime()->jitRuntime(), callee);
   uint32_t ret = callJitNoProfiler(callee);
   return ret;
 }

@@ -25,5 +25,10 @@ clangd:
 %.run: %.js
 	$(JS) $(JS_FLAG) $<
 
+%.debug: %.js
+	gdb --args $(JS) $(JS_FLAG) $<
+
 out:
 	make t.run > out 2>&1
+
+

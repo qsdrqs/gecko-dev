@@ -42,11 +42,6 @@
                         "request": "launch",
                         "program": "${workspaceFolder}/cfi-test/js",
                         "args": [
-                                "--ion-warmup-threshold=6",
-                                "--baseline-warmup-threshold=4", 
-                                "--blinterp-warmup-threshold=2",
-                                "--ion-inlining=off",
-                                "--ion-offthread-compile=off",
                                 "cfi-test/t.js"
                         ],
                         "stopAtEntry": false,
