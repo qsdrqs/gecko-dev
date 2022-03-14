@@ -2299,7 +2299,7 @@ bool jit::IonCompileScriptForBaselineOSR(JSContext* cx, BaselineFrame* frame,
 
   *infoPtr = info;
   // set r12 to cfi key
-  asm("movq  %0, %%r12" : :"r"(cx->runtime()->jitRuntime()->cfiKey.key) );
+  // asm("movq  %0, %%r12" : :"r"(cx->runtime()->jitRuntime()->cfiKey.key) );
   return true;
 }
 

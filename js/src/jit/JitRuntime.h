@@ -312,7 +312,7 @@ class JitRuntime {
 #else
     cfiKey.key = (uint8_t *) (uint64_t)rand();
 #endif
-    //cfiKey.key = (uint8_t *) nullptr;
+    //cfiKey.key = (uint8_t *) 0xdeadbee0;
   }
 
   bool addCFI(uint8_t* enter, uint8_t* exit) {

@@ -2308,6 +2308,7 @@ void MacroAssembler::decode_cfi(Register objreg) {
   // uint64_t key = (uint64_t)rt->cfiKey.key;
   // xor64(Imm64(key), objreg);
   Register keyreg = Register::FromName("r12");
+  // check_cfi_reg(keyreg);
   xorq(keyreg, objreg);
   fprintf(stderr, "searchme: calling decode_cfi with %s\n", objreg.name());
 }

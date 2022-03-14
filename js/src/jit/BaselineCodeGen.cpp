@@ -1427,6 +1427,10 @@ bool BaselineCompilerCodeGen::emitWarmUpCounterIncrement() {
     if (!callVM<Fn, IonCompileScriptForBaselineOSR>()) {
       return false;
     }
+    // load key due to IonCompileScriptForBaselineOSR will reset r12
+    uint64_t key = (uint64_t)(GetJitContext()->runtime->jitRuntime()->cfiKey.key);
+    Register keyreg = Register::FromName("r12");
+    masm.mov(Imm64(key), keyreg);
 
     // The return register holds the IonOsrTempData*. Perform OSR if it's not
     // nullptr.
