@@ -143,7 +143,8 @@ class Registers {
   static const SetType SingleByteRegs = AllMask & ~(1 << X86Encoding::rsp);
 
   static const SetType NonAllocatableMask =
-      (1 << X86Encoding::rsp) | (1 << X86Encoding::r11);  // This is ScratchReg.
+      (1 << X86Encoding::rsp) | (1 << X86Encoding::r11) |  // This is ScratchReg.
+      (1 << X86Encoding::r12); // This is CFI key register.
 
   // Registers returned from a JS -> JS call.
   static const SetType JSCallMask = (1 << X86Encoding::rcx);
