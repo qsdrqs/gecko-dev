@@ -2665,13 +2665,13 @@ void CheckCFI_Abi(uintptr_t checklist, uintptr_t objreg) {
 
   for (size_t i = 0; i < cfiCheckList->size; i++) {
     if (cfiCheckList->cfi_list[i].enter == objReg) {
-      // fprintf(stderr, "searchme: CheckCFI_Abi success when checking %p\n", objReg);
+      fprintf(stderr, "searchme: CheckCFI_Abi success when checking %p\n", objReg);
       fflush(stdout); fflush(stderr);
       return;
     }
   }
 
-  // fprintf(stderr, "searchme: CheckCFI failure when checking %p\n", objReg);
+  fprintf(stderr, "searchme: CheckCFI failure when checking %p\n", objReg);
 }
 
 void AddCFIValidPtr(uintptr_t ptr) {
