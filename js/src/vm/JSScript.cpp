@@ -3154,7 +3154,7 @@ BaseScript* BaseScript::New(JSContext* cx, JS::Handle<JSFunction*> function,
     // printf("searchme: stubEntry init %p\n", stubEntry);
     stubEntry = cx->runtime()->jitRuntime()->interpreterStub().value;
     cx->runtime()->jitRuntime()->addCFI(stubEntry, stubEntry+0);
-    stubEntry = cx->runtime()->jitRuntime()->encodeCFI(stubEntry);
+    // stubEntry = cx->runtime()->jitRuntime()->encodeCFI(stubEntry);
     // printf("searchme: stubEntry changed to %p\n", stubEntry);
   }
 
@@ -3199,8 +3199,8 @@ BaseScript* BaseScript::CreateRawLazy(JSContext* cx, uint32_t ngcthings,
 void BaseScript::setJitCodeRaw(uint8_t* code, JSRuntime* rt) {
     // printf("searchme: setJitCodeRaw init %p\n", code);
     // uint8_t * cfi_code = (uint8_t *)(((uint64_t)code)^0xeadbeef0);
-    uint8_t * cfi_code = rt->jitRuntime()->encodeCFI(code);
-    setHeaderPtr(cfi_code);
+    // uint8_t * cfi_code = rt->jitRuntime()->encodeCFI(code);
+    setHeaderPtr(code);
     // printf("searchme: setJitCodeRaw changed to %p\n", cfi_code);
     // setHeaderPtr(code);
 }
