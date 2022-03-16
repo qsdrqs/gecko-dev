@@ -3153,7 +3153,7 @@ BaseScript* BaseScript::New(JSContext* cx, JS::Handle<JSFunction*> function,
   if (jit::HasJitBackend()) {
     // printf("searchme: stubEntry init %p\n", stubEntry);
     stubEntry = cx->runtime()->jitRuntime()->interpreterStub().value;
-    cx->runtime()->jitRuntime()->addCFI(stubEntry, stubEntry+0);
+    //cx->runtime()->jitRuntime()->addCFI(stubEntry, stubEntry+0);
     stubEntry = cx->runtime()->jitRuntime()->encodeCFI(stubEntry);
     // printf("searchme: stubEntry changed to %p\n", stubEntry);
   }
