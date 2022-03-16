@@ -2121,8 +2121,8 @@ void MacroAssembler::loadJitCodeRaw(Register func, Register dest) {
   loadPrivate(Address(func, JSFunction::offsetOfJitInfoOrScript()), dest);
   loadPtr(Address(dest, BaseScript::offsetOfJitCodeRaw()), dest);
   // decode_cfi(dest);
-  JitRuntime::CFICheckList checkList = GetJitContext()->runtime->jitRuntime()->cfiCheckList;
-  check_cfi_abi(&checkList, dest);
+  JitRuntime::CFICheckList* checkList = &GetJitContext()->runtime->jitRuntime()->cfiCheckList;
+  check_cfi_abi(checkList, dest);
 }
 
 void MacroAssembler::loadBaselineJitCodeRaw(Register func, Register dest,
