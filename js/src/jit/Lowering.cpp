@@ -574,7 +574,7 @@ void LIRGenerator::visitCall(MCall* call) {
     } else {
       LDefinition tempReg = tempFixed(CallTempReg0);
       uint32_t tempVirtualReg = tempReg.virtualRegister();
-      printf("searchme: virtual register of adding: %d\n", tempVirtualReg);
+      // printf("searchme: virtual register of adding: %d\n", tempVirtualReg);
       lir = new (alloc()) LCallKnown(useRegisterAtStart(call->getCallee()),
                                      tempReg);
     }

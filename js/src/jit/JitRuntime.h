@@ -316,7 +316,7 @@ class JitRuntime {
   }
 
   bool addCFI(uint8_t* enter, uint8_t* exit) {
-    fprintf(stderr, "searchme: addCFI adding %p\n", enter);
+    // fprintf(stderr, "searchme: addCFI adding %p\n", enter);
     fflush(stdout); fflush(stderr);
     if (cfiCheckList.size == cfiCheckList.capacity) {
       size_t new_cap = cfiCheckList.capacity *2 + 1;

@@ -316,8 +316,8 @@ MethodStatus BaselineCompiler::compile() {
     }
 
     JitcodeGlobalEntry::BaselineEntry entry;
-    printf("searchme: 319 start: %p\n", code->raw());
-    printf("searchme: 320 end: %p\n", code->rawEnd());
+    // printf("searchme: 319 start: %p\n", code->raw());
+    // printf("searchme: 320 end: %p\n", code->rawEnd());
     entry.init(code, code->raw(), code->rawEnd(), script, str.release());
     cx->runtime()->jitRuntime()->addCFI(code->raw(), code->rawEnd());
 
@@ -1489,13 +1489,13 @@ bool BaselineCompilerCodeGen::emitWarmUpCounterIncrement() {
     }
 #endif
 
-    printf("searchme: osrDataReg's offset is: %lu\n", IonOsrTempData::offsetOfJitCode());
+    // printf("searchme: osrDataReg's offset is: %lu\n", IonOsrTempData::offsetOfJitCode());
 
     // Jump into Ion.
-    printf("searchme: loading frame ptr (reg: %s, offset: %zu) --> (reg: %s)\n", osrDataReg.name(), IonOsrTempData::offsetOfJitCode(), OsrFrameReg.name());
+    // printf("searchme: loading frame ptr (reg: %s, offset: %zu) --> (reg: %s)\n", osrDataReg.name(), IonOsrTempData::offsetOfJitCode(), OsrFrameReg.name());
     masm.loadPtr(Address(osrDataReg, IonOsrTempData::offsetOfBaselineFrame()),
                  OsrFrameReg);
-    printf("searchme: jumping into Ion at (reg: %s, offset: %zu)\n", osrDataReg.name(), IonOsrTempData::offsetOfJitCode());
+    // printf("searchme: jumping into Ion at (reg: %s, offset: %zu)\n", osrDataReg.name(), IonOsrTempData::offsetOfJitCode());
     masm.jump(Address(osrDataReg, IonOsrTempData::offsetOfJitCode()));
   } else {
     prepareVMCall();

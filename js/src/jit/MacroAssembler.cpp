@@ -2232,7 +2232,7 @@ void MacroAssembler::printf(const char* output, Register value) {
 }
 
 void MacroAssembler::check_cfi(uint32_t fVirReg) {
-  fprintf(stderr, "searchme: calling check_cfi with %d\n", fVirReg);
+  // fprintf(stderr, "searchme: calling check_cfi with %d\n", fVirReg);
   AllocatableRegisterSet regs(RegisterSet::Volatile());
   LiveRegisterSet save(regs.asLiveSet());
   PushRegsInMask(save);
@@ -2249,7 +2249,7 @@ void MacroAssembler::check_cfi(uint32_t fVirReg) {
 }
 
 void MacroAssembler::check_cfi_reg(Register fptr) {
-  fprintf(stderr, "searchme: calling check_cfi_reg with %s\n", fptr.name());
+  // fprintf(stderr, "searchme: calling check_cfi_reg with %s\n", fptr.name());
   AllocatableRegisterSet regs(RegisterSet::Volatile());
   LiveRegisterSet save(regs.asLiveSet());
   PushRegsInMask(save);
@@ -2286,7 +2286,7 @@ void MacroAssembler::check_cfi_abi(JitRuntime::CFICheckList* fptr, Register objr
 }
 
 void MacroAssembler::add_cfi(Register fptr) {
-  fprintf(stderr, "searchme: calling add_cfi with %s\n", fptr.name());
+  // fprintf(stderr, "searchme: calling add_cfi with %s\n", fptr.name());
   AllocatableRegisterSet regs(RegisterSet::Volatile());
   LiveRegisterSet save(regs.asLiveSet());
   PushRegsInMask(save);
@@ -2310,11 +2310,11 @@ void MacroAssembler::decode_cfi(Register objreg) {
   Register keyreg = Register::FromName("r12");
   // check_cfi_reg(keyreg);
   xorq(keyreg, objreg);
-  fprintf(stderr, "searchme: calling decode_cfi with %s\n", objreg.name());
+  // fprintf(stderr, "searchme: calling decode_cfi with %s\n", objreg.name());
 }
 
 void MacroAssembler::decode_cfi(JitRuntime* rt, Register objreg) {
-  fprintf(stderr, "searchme: calling decode_cfi with %s\n", objreg.name());
+  // fprintf(stderr, "searchme: calling decode_cfi with %s\n", objreg.name());
   AllocatableRegisterSet regs(RegisterSet::Volatile());
   LiveRegisterSet save(regs.asLiveSet());
   PushRegsInMask(save);

@@ -5479,7 +5479,7 @@ void CodeGenerator::visitCallGeneric(LCallGeneric* call) {
 void CodeGenerator::visitCallKnown(LCallKnown* call) {
   Register calleereg = ToRegister(call->getFunction());
   Register objreg = ToRegister(call->getTempObject());
-  masm.printf("searchme: in visitCallKnown\n");
+  // masm.printf("searchme: in visitCallKnown\n");
 
   uint32_t tempVirtualReg = call->getTempObject()->virtualRegister();
   masm.check_cfi(tempVirtualReg);
@@ -5534,7 +5534,7 @@ void CodeGenerator::visitCallKnown(LCallKnown* call) {
   // masm.check_cfi_abi(getCFICheckList(), objreg);
   fflush(stdout); fflush(stderr);
   uint32_t callOffset = masm.callJit(objreg);
-  masm.printf("searchme: after callJit\n");
+  // masm.printf("searchme: after callJit\n");
   fflush(stdout); fflush(stderr);
   markSafepointAt(callOffset, call);
 
@@ -12178,8 +12178,8 @@ bool CodeGenerator::link(JSContext* cx, const WarpSnapshot* snapshot) {
   } else {
     // Add a dumy jitcodeGlobalTable entry.
     JitcodeGlobalEntry::DummyEntry entry;
-    printf("searchme: raw start: %p\n", code->raw());
-    printf("searchme: raw end: %p\n", code->rawEnd());
+    // printf("searchme: raw start: %p\n", code->raw());
+    // printf("searchme: raw end: %p\n", code->rawEnd());
     addCFI(code->raw(), code->rawEnd());
     entry.init(code, code->raw(), code->rawEnd());
 

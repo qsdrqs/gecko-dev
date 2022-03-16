@@ -109,7 +109,7 @@ void MacroAssembler::xor64(Imm64 imm, Register64 dest) {
 }
 
 void MacroAssembler::xor64(Imm64 imm, Register dest) {
-  fprintf(stderr, "searchme: in my xor 64\n");
+  // fprintf(stderr, "searchme: in my xor 64\n");
   if (INT32_MIN <= int64_t(imm.value) && int64_t(imm.value) <= INT32_MAX) {
     xorq(Imm32(imm.value), dest);
   } else {

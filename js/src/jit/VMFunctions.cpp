@@ -2634,7 +2634,7 @@ void Printf0(const char* output) {
   // Use stderr instead of stdout because this is only used for debug
   // output. stderr is less likely to interfere with the program's normal
   // output, and it's always unbuffered.
-  fprintf(stderr, "searchme: In some C functions\n");
+  // fprintf(stderr, "searchme: In some C functions\n");
   fprintf(stderr, "%s", output);
 }
 
@@ -2650,12 +2650,12 @@ void Printf1(const char* output, uintptr_t value) {
 
 void CheckCFI(uint32_t ptr) {
   AutoUnsafeCallWithABI unsafe;
-  fprintf(stderr, "searchme: CheckCFI checking %d\n", ptr);
+  // fprintf(stderr, "searchme: CheckCFI checking %d\n", ptr);
 }
 
 void CheckCFI_Reg(uintptr_t ptr) {
   AutoUnsafeCallWithABI unsafe;
-  fprintf(stderr, "searchme: CheckCFI_Reg checking %p\n", (void *)ptr);
+  // fprintf(stderr, "searchme: CheckCFI_Reg checking %p\n", (void *)ptr);
 }
 
 void CheckCFI_Abi(uintptr_t checklist, uintptr_t objreg) {
@@ -2665,13 +2665,13 @@ void CheckCFI_Abi(uintptr_t checklist, uintptr_t objreg) {
 
   for (size_t i = 0; i < cfiCheckList->size; i++) {
     if (cfiCheckList->cfi_list[i].enter == objReg) {
-      fprintf(stderr, "searchme: CheckCFI_Abi success when checking %p\n", objReg);
+      // fprintf(stderr, "searchme: CheckCFI_Abi success when checking %p\n", objReg);
       fflush(stdout); fflush(stderr);
       return;
     }
   }
 
-  fprintf(stderr, "searchme: CheckCFI failure when checking %p\n", objReg);
+  // fprintf(stderr, "searchme: CheckCFI failure when checking %p\n", objReg);
 }
 
 void AddCFIValidPtr(uintptr_t ptr) {
@@ -2684,9 +2684,9 @@ uint8_t * DecodeCFI(uintptr_t runtime, uintptr_t objreg_in) {
   uint8_t* objReg = (uint8_t*)objreg_in;
   AutoUnsafeCallWithABI unsafe;
 
-  printf("searchme: calling DecodeCFI with %p\n", objReg);
+  // printf("searchme: calling DecodeCFI with %p\n", objReg);
   uint8_t * cfi_code = rt->decodeCFI(objReg);
-  printf("searchme: DecodeCFI changed objreg to %p\n", cfi_code);
+  // printf("searchme: DecodeCFI changed objreg to %p\n", cfi_code);
   fflush(stdout); fflush(stderr);
   return cfi_code;
 }
